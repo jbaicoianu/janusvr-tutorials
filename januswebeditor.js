@@ -65,7 +65,7 @@ JanusWebEditor.prototype.load = function(path, files) {
   };
   if (path[path.length-1] != '/') path += '/';
 
-  this.articlepath = document.location.href + path;
+  this.articlepath = document.location.origin + document.location.pathname + path;
 
   var promises = [];
   for (var k in files) {
@@ -120,6 +120,7 @@ JanusWebEditor.prototype.updateScene = function() {
 
     room.validateSource(this.editor_markup.value).then(function(valid) {
       if (valid) {
+console.log('FUUUU', this.articlepath);
         this.client.janusweb.loadFromSource(this.editor_markup.value, true, this.articlepath)
       }
     }.bind(this)).catch(function(e) {

@@ -1,0 +1,232 @@
+    <p>Let's make a game that totally isn't a direct copy of a well-known game from a known-litigious foreign multinational corporation.  We'll start with a default room with a set of assets we'll use in our game - a basic player object, some blocks, an enemy, some scenery, a goal flag, a collectible coin, and one special item.  We also include some sounds which will be associated with each of these objects, and the script file that ties it all together.
+
+    <h2 id="assets">Assets</h2>
+    <pre>
+&lt;FireBoxRoom&gt;
+  &lt;Assets&gt;
+    &lt;AssetObject id="pipe" src="scenery/pipe.obj" /&gt;
+    &lt;AssetObject id="brickblock" src="blocks/brick.obj" /&gt;
+    &lt;AssetObject id="coin" src="items/coin.obj" /&gt;
+    &lt;AssetObject id="goomba" src="enemies/goomba.obj" /&gt;
+    &lt;AssetObject id="flag" src="items/flag.obj" /&gt;
+    &lt;AssetObject id="questionblock" src="blocks/question.obj" /&gt;
+    &lt;AssetObject id="mushroom" src="items/mushroom.obj" /&gt;
+  
+    &lt;AssetSound id="bonk" src="sounds/bonk.wav" /&gt;
+    &lt;AssetSound id="break" src="sounds/break.wav" /&gt;
+    &lt;AssetSound id="jump" src="sounds/jump.wav" /&gt;
+    &lt;AssetSound id="stomp" src="sounds/stomp.wav" /&gt;
+    &lt;AssetSound id="coin" src="sounds/coin.wav" /&gt;
+    &lt;AssetSound id="win" src="sounds/win.wav" /&gt;
+    &lt;AssetSound id="die" src="sounds/die.wav" /&gt;
+    &lt;AssetSound id="oneup" src="sounds/oneup.wav" /&gt;
+    &lt;AssetSound id="gameover" src="sounds/gameover.wav" /&gt;
+    &lt;AssetSound id="music" src="sounds/music.mp3" /&gt;
+    
+    &lt;AssetScript src="totallynotmario.js" /&gt;
+  &lt;/Assets&gt;
+  &lt;Room&gt;
+  &lt;/Room&gt;
+&lt;/FireBoxRoom&gt;
+</pre>
+
+
+    <p>Now let's go through the implemention of these types, one by one.  For now we'll focus on functionality - collecting coins, stomping on enemies, winning and dying.  We'll come back and add some fancy effects later.
+
+    <h2 id="player">Player</h2>
+
+    <p>First we'll set up the player.  As we all know, every self-respecting player has three lives, can grow, and should work hard to try to collect as much money as possible before their inevitable death.  So let's set that up and see what the code looks like.
+
+    <pre>
+function GamePlayer() {
+  this.lives = 3;
+  this.size = 0;
+  this.coins = 0;
+  this.alive = true;
+  
+  // Create an invisible object to represent the player's collider
+  this.object = room.createObject('Object', {
+    id: 'capsule',
+    collision_id: 'capsule',
+    visible: false
+  });
+} 
+GamePlayer.prototype.update = function(dt) {
+  this.object.pos = player.pos;
+}
+GamePlayer.prototype.hit = function() {
+  if (this.size == 0) {
+    this.die();
+  } else {
+    this.size = 0; // Getting hit shrinks you even if you have a flower
+  }
+}
+GamePlayer.prototype.addCoin = function(numcoins) {
+  if (!numcoins) numcoins = 1;
+  this.coins += numcoins;
+  room.playSound('coin');
+
+// if someone adds a whole bunch of coins at once, we want to hear a 
+  while (this.coins > 100) {
+    this.lives++;
+    this.coins -= 100;
+    room.playSound('oneup');
+  }
+}
+GamePlayer.prototype.die = function() {
+  this.alive = false;
+  this.lives--;
+  room.stopSound('music');
+  room.playSound('die');
+  if (this.lives == 0) {
+    this.gameover();
+  } else {
+    this.reset();
+  }
+}
+GamePlayer.prototype.gameover = function() {
+  room.playSound('gameover');
+}
+GamePlayer.prototype.reset = function() {
+  room.playSound('music');
+  player.pos = Vector(0,0,0);
+  this.size = 0;
+  this.alive = true;
+}
+</pre>
+
+    <p>We'll instantiate this with the following code:
+    <pre>var mario = new GamePlayer();</pre>
+
+    <h2 id="pipes">Pipes</h2>
+
+    <p>The most basic object in our scene is the humble pipe.  It just sits there looking pretty, and preventing other objects from walking through it.  Yes, we'll probably want to go back and add some fancy pipes later, like maybe a pipe with a carniverous plant living inside, or a pipe which leads to a secret cavern full of riches - but for now we just need a simple pipe.
+
+    <pre>
+function Pipe(pos) {
+  this.object = room.createObject('Object', {
+    id: 'pipe',
+    pos: pos,
+    collision_id: 'cylinder'
+  });
+}
+</pre>
+
+    <p>We can now create new pipes with the following code:
+    <pre>var mypipe = new Pipe(Vector(x, y, z));</pre>
+
+
+    <h2 id="brickblocks">Brick Blocks</h2>
+
+    <p>Next let's define the most basic block type, a solid block of brick that goes "bonk" when you hit it from below.  If you're big, you can even break it.
+
+    <pre>
+function BrickBlock(pos) {
+  this.object = room.createObject('Object', {
+    id: 'brickblock',
+    collision_id: 'cube',
+    pos: pos
+  });
+}
+BrickBlock.prototype.onCollide = function(other) {
+  if (other == mario) {
+    if (mario.size > 0) {
+      this.break();
+    } else {
+      this.bonk();
+    }
+  }
+}
+BrickBlock.prototype.break = function() {
+  this.playSound('break');
+  room.removeObject(this.object);
+}
+BrickBlock.prototype.bonk = function() {
+  this.playSound('bonk');
+}
+</pre>
+
+    <p>We can now create new pipes with the following code:
+    <pre>var mybrick = new BrickBlock(Vector(x, y, z));</pre>
+
+
+    <h2 id="coins">Coins</h2>
+
+    <p>Our player needs an incentive to progress through the game.  Of course there's always going to be a princess in the next castle, but you're going to need some money when you get there.  Dating a princess isn't cheap.  
+
+    <pre>
+function Coin(pos) {
+  this.object = room.createObject('Object', {
+    id: 'coin',
+    pos: pos,
+    collision_id: 'cylinder',
+  });
+}
+Coin.prototype.onCollide = function(other) {
+  if (other == mario) {
+    this.collect();
+  }
+}
+Coin.prototype.collect = function() {
+  mario.addCoin();
+  room.removeObject(this.object);
+}
+</pre>
+    <h2 id="enemies">Enemies</h2>
+    <p>Of course, it's all been easy so far - just a walk in the park, full of coins, pipes, and blocks of bricks.  Unfortunately life just isn't that easy.  Watch out, here come the goombas.
+
+    <pre>
+function Goomba(pos) {
+  this.alive = true;
+  this.direction = 1;
+  this.startpos = pos;
+  this.object = room.createObject('Object', {
+    id: 'goomba',
+    pos: pos,
+    collision_id: 'sphere'
+  });
+}
+Goomba.prototype.onCollide = function(other) {
+  if (other == mario) {
+    // If mario is jumping, we die.  Otherwise, he dies.
+    if (mario.isJumping) {
+      this.die();
+    } else {
+      mario.die();
+    }
+  } else {
+    this.changeDirection();
+  }
+}
+Goomba.prototype.changeDirection = function(direction) {
+  if (typeof direction != 'undefined') {
+    this.direction = direction;
+  } else {
+    this.direction = (this.direction == 1 ? -1 : 1);
+  }
+  if (this.direction == -1) {
+    this.object.xdir = Vector(0,0,-1);
+    this.object.ydir = Vector(0,1,0);
+    this.object.zdir = Vector(1,0,0);
+  } else if (this.direction == 1) {
+    this.object.xdir = Vector(0,0,1);
+    this.object.ydir = Vector(0,1,0);
+    this.object.zdir = Vector(-1,0,0);
+  }
+}
+Goomba.prototype.reset = function() {
+  this.alive = false;
+  this.object.pos.y = -1000;
+}
+Goomba.prototype.reset = function() {
+  this.alive = true;
+  this.object.pos = this.startpos;
+  this.direction = 1;
+}
+Goomba.prototype.update = function(dt) {
+  if (this.alive) {
+    this.object.pos.x += this.speed * (dt / 1000);
+  }
+}
+</pre>
+

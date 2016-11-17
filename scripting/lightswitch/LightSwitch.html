@@ -1,0 +1,15 @@
+<FireBoxRoom>
+<Assets>
+<AssetScript src="LightSwitch.js" />
+
+</Assets>
+<Room  use_local_asset="room_plane" >
+
+#onclick is used for the JS that plays the sound
+<Object id="cube" collider_id="cube"  js_id="stopcube" onclick="LightS()" pos="3.000 1.000 3.000" col="1 0 0"  />
+<Object id="cube" collider_id="cube" js_id="playcube" onclick="LightP()" pos="3.000 1.000 1.500" col="0 1 0"  />
+
+<Light js_id="OmniLight" pos="5 3 5" light_intensity="80" light_cone_angle="0" light_cone_exponent="10" light_range="15" col="#FF9900"/>
+
+</Room>
+</FireBoxRoom>

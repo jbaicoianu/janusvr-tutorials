@@ -1,0 +1,32 @@
+<p>To allow new users to get started with creating a room quickly, FireBox comes packaged with a collection of room "templates", which are geometry that can be used to define the structure and boundary for a Room. When viewing HTML content in FireBox which does not contain a FireBoxRoom tag, rooms are created using these templates.
+
+<p>There are two broad approaches to room creation: (i) Use one of the templates available. (ii) Do not use any room template, instead using AssetObjects to define the geometry and boundary for your room (discussed later). In this subsection, we consider the first approach.
+
+<p>The following table shows the id's and a visualization of each of the templates available with FireBox at present:
+<p><img src="http://janusvr.com/guide/markuplanguage/images/firebox_room_templates.jpg" style="width: 100%;">
+
+<p>To use any of these room templates, set the use_local_asset attribute for the Room to the template's name. For, example, to use room template with id "room1", do the following:
+
+<pre>
+<Room use_local_asset="room1">
+</Room>
+</pre>
+
+<p>Note that if the use_local_asset attribute is not set, the Room will be completely empty (and have no geometry or boundaries).
+The colour of the room template can be selected. The colour is specified using 3 values which range between 0 and 1 for each of the red, green and blue components. For example, the colour of a "very blue" room could be expressed as "0 0 1". To set the room template colour for a room, set the col attribute for the Room, like the following example:
+
+<pre>
+<Room use_local_asset="room1" col="0 0 1">
+</Room>
+</pre>
+
+<p>The room template can be made visible or invisible by setting the visible attribute, like the following:
+
+<pre>
+<Room use_local_asset="room_plane" visible="false">
+</Room>
+</pre>
+
+<p>This example uses the room_plane template, the geometry will be there for collision, and you will be able to use the cursor and menu on it, but it will not be visible. The default value for visible is "true".
+
+

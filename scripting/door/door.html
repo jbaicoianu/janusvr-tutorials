@@ -1,0 +1,18 @@
+<FireBoxRoom>
+<Assets>
+
+<AssetObject id="door" src="door.dae.gz" tex_compress="true" />
+
+<AssetScript src="door.js" />
+<AssetSound id="aud_door_open" src="door_open.wav" />
+<AssetSound id="aud_door_close" src="door_close.wav" />
+
+</Assets>
+<Room  use_local_asset="room_plane" pos="4 0 4" >
+<Object id="door" js_id="door1" onclick="vrbar.clickOpposite()" pos="5.022000 0.200000 9.100000" scale="0.959000 1.000000 1.000000" col="0.530 0.580 0.660" collider_id="door" />
+<Object id="door" js_id="door2" onclick="vrbar.clickOpposite()" pos="2.178000 0.200000 9.100000" xdir="-1.000 0.000 0.004" zdir="-0.004 0.000 -1.000" scale="0.959000 1.000000 1.000000" col="0.530 0.580 0.660" collider_id="door" />
+<Text js_id="isDoorOpen" pos="5.000000 1.000000 0.000000" scale="0.100000 0.100000 0.100000" col="0.000 0.000 1.000">false</Text>
+
+</Room>
+</FireBoxRoom>
+

@@ -1,0 +1,7 @@
+{
+  "a room": ["markup/room", {"contents": false, "article": "article.html", "script": false, "markup": "room.html"}],
+  "some shapes": ["markup/shapes", {"contents": false, "article": "article.html", "script": false, "markup": "shapes.html"}],
+  "a light switch": ["scripting/lightswitch", {"contents": "contents.html", "article": "article.html", "script": "LightSwitch.js", "markup": "LightSwitch.html"}],
+  "a door": ["scripting/door", {"contents": false, "article": "article.html", "script": "door.js", "markup": "door.html"}],
+  "a game": ["scripting/mario", {"contents": "contents.html", "article": "article.html", "script": "mario.js", "markup": "mario.html"}]
+}

@@ -1,0 +1,56 @@
+<FireBoxRoom>
+ <Assets>
+  <AssetScript src="mario.js" />
+  <AssetSound id="stomp" src="http://themushroomkingdom.net/sounds/wav/smb/smb_stomp.wav" />
+  <AssetSound id="jump" src="http://themushroomkingdom.net/sounds/wav/smb/smb_jump-small.wav" />
+  <AssetSound id="coin" src="http://themushroomkingdom.net/sounds/wav/smb/smb_coin.wav" />
+  <AssetSound id="die" src="http://themushroomkingdom.net/sounds/wav/smb/smb_mariodie.wav" />
+  <AssetSound id="gameover" src="http://themushroomkingdom.net/sounds/wav/smb/smb_gameover.wav" />
+  <AssetSound id="win" src="http://themushroomkingdom.net/sounds/wav/smb/smb_stage_clear.wav" />
+  <AssetSound id="music" src="http://www.mariomayhem.com/downloads/sound_tracks/Super_Mario_Bros._1/01-main-theme-overworld.mp3" />
+  <AssetObject id="goomba" src="enemies/goomba.obj" mtl="enemies/goomba.mtl" />
+  <AssetObject id="coin" src="items/coin.obj" mtl="items/coin.mtl" />
+  <AssetObject id="mariopipe" src="scenery/pipe.obj" mtl="scenery/pipe.mtl" />
+ </Assets>
+ <Room use_local_asset="room_plane" pos="-15 0.1 10" fwd="1 0 0" walk_speed="5" >
+   <aObject id="cube" js_id="level" collision_id="cube" collider_id="cube" pos="50 .1 10" col="0.25 0.1 0" scale="140 0.2 4" collision_static="true"/>
+
+   <Object id="goomba" js_id="goomba0" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="0 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" collision_static="true" />
+
+   <Object id="mariopipe" js_id="pipe1" scale="1 1 1" collision_id="cylinder" collider_id="cylinder" collider_pos="0 -1.5 0" collider_scale="1.5 2 1.5" pos="5 0 10" col="0 1 0" />
+
+   <Object id="goomba" js_id="goomba1" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="10 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" collision_static="true"/>
+
+   <Object id="mariopipe" js_id="pipe2" scale="1 1 1" collision_id="cylinder" collider_id="cylinder" collider_scale="1.5 2 1.5" pos="15 0 10" col="0 1 0" />
+
+   <Object id="goomba" js_id="goomba2" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="20 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+   <Object id="goomba" js_id="goomba3" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="25 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+
+   <Object id="mariopipe" js_id="pipe3" scale="1 1 1" collision_id="cylinder" collider_id="cylinder" collider_scale="1.5 2 1.5" pos="30 0 10" col="0 1 0" />
+
+   <Object id="goomba" js_id="goomba4" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="35 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+   <Object id="goomba" js_id="goomba5" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="44 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+   <Object id="goomba" js_id="goomba6" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="45 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+   <Object id="goomba" js_id="goomba7" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="50 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+   <Object id="goomba" js_id="goomba8" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="55 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+   <Object id="goomba" js_id="goomba9" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="62 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+
+   <Object id="mariopipe" js_id="pipe4" scale="1 1 1" collision_id="cylinder" collider_id="cylinder" collider_scale="1.5 2 1.5" pos="65 0 10" col="0 1 0" />
+
+   <Object id="goomba" js_id="goomba10" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="70 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+   <Object id="goomba" js_id="goomba11" collision_id="sphere" collider_id="sphere" collider_scale="1 1 1" pos="75 .2 10" col="0.75 0.38 0" scale=".005 .005 .005" />
+
+   <Object id="mariopipe" js_id="pipe5" scale="1 1 1" collision_id="cylinder" collider_id="cylinder" collider_scale="1.5 2 1.5" pos="90 0 10" col="0 1 0" />
+
+
+   <Object id="cylinder" js_id="coin1" acollision_id="cylinder" collider_id="cylinder" pos="0 .75 10" col="1 1 0" scale=".75 .1 1" zdir="0 1 0" ydir="0 0 -1" xdir="1 0 0" />
+   <Object id="cylinder" js_id="coin2" acollision_id="cylinder" collider_id="cylinder" pos="8 .75 10" col="1 1 0" scale=".75 .1 1" zdir="0 1 0" ydir="0 0 -1" xdir="1 0 0" />
+   <Object id="cylinder" js_id="coin3" acollision_id="cylinder" collider_id="cylinder" pos="10 .75 10" col="1 1 0" scale=".75 .1 1" zdir="0 1 0" ydir="0 0 -1" xdir="1 0 0" />
+   <Object id="cylinder" js_id="coin4" acollision_id="cylinder" collider_id="cylinder" pos="15 1.75 10" col="1 1 0" scale=".75 .1 1" zdir="0 1 0" ydir="0 0 -1" xdir="1 0 0" />
+   <Object id="cylinder" js_id="coin5" acollision_id="cylinder" collider_id="cylinder" pos="42 .75 10" col="1 1 0" scale=".75 .1 1" zdir="0 1 0" ydir="0 0 -1" xdir="1 0 0" />
+   <Object id="cylinder" js_id="coin6" acollision_id="cylinder" collider_id="cylinder" pos="44 .75 10" col="1 1 0" scale=".75 .1 1" zdir="0 1 0" ydir="0 0 -1" xdir="1 0 0" />
+
+   <Link url="index.html" pos="100 0 10" fwd="-1 0 0" auto_load="true" />
+
+ </Room>
+</FireBoxRoom>

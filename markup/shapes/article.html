@@ -7,16 +7,16 @@
     &lt;Object id="cylinder" pos="2.6 1 -1.5"  col="1 1 0" /&gt;
     &lt;Object id="capsule"  pos="1.0 1 -2.8"  col="1 0 1" /&gt;
     &lt;Object id="pipe"     pos="-1.0 1 -2.8" col="0 1 1" /&gt;
-    &lt;Object id="plane"    pos="-2.6 1 -1.5" col="0 0 0" /&gt;
-    &lt;Object id="pyramid"  pos="-3.0 1 0.5"  col="1 1 1" /&gt;
-    &lt;Object id="torus"    pos="-1.9 1 2.3"  col=".5 .5 .5" /&gt;
+    &lt;Object id="plane"    pos="-2.6 1 -1.5" col="1 .5 0" /&gt;
+    &lt;Object id="pyramid"  pos="-3.0 1 0.5"  col=".2 .5 1" /&gt;
+    &lt;Object id="torus"    pos="-1.9 1 2.3"  col=".5 .8 .2" /&gt;
 </pre>
 
+<img src="http://www.skillsyouneed.com/images/trig/sin-cos-tan-unit-circle.png" class="article_image_right">
 <p>Where did we get those numbers for the object positions, you ask?  With math, of course!  We want to organize everything in a circle around the center of the room, with a nice comfortable 3m radius.  
 <p>A circle is 360 degrees, aka 2*PI radians, and we have 9 objects to place in a circle.  So by dividing the size of the circle by the number of items, we find that we should place the item every 40 degrees, or 0.7 radians.  
 <p>We can then use some basic trigonometry to turn those into (x,y,z) coordinates for each item:
 
-<img src="http://www.skillsyouneed.com/images/trig/sin-cos-tan-unit-circle.png">
 
 <pre>var numItems = 9,
     radius = 3,

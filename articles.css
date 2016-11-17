@@ -67,6 +67,7 @@ a {
   border: 1px solid black;
   padding: .25em;
   color: black;
+  clear: both;
 }
 .viewer {
   height: 50%;
@@ -142,4 +143,6 @@ a {
 .article_content_select option {
   background: #282828;
 }
-
+.article_image_right {
+  float: right;
+}
